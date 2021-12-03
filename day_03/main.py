@@ -35,21 +35,18 @@ def get_least_common_bit(data: [], index: int) -> str:
 
 
 def most_common_bits_for_string(data: []) -> str:
-    ans = ""
+    result = ""
     end = len(data[0].get_bit_string())
     for index in range(end):
-        ans = ans + get_most_common_bit(data, index)
+        result += get_most_common_bit(data, index)
 
-    return ans
+    return result
 
 
 def invert_bits(bit_string: str) -> str:
     result = ""
-    for index in range(len(bit_string)):
-        if bit_string[index] == "0":
-            result += "1"
-        else:
-            result += "0"
+    for char in bit_string:
+        result += "0" if char == "1" else "1"
     return result
 
 
@@ -68,10 +65,10 @@ def answer_one(data: []):
     print("")
 
 
-def loop(data: [], most_common_switch: bool) -> str:
+def loop(data: [], func_get_least_or_most_common_bit) -> str:
     offset = 0
     while True:
-        mask = get_most_common_bit(data, offset) if most_common_switch else get_least_common_bit(data, offset)
+        mask = func_get_least_or_most_common_bit(data, offset)
         data = filter_list_by_mask(data, mask, offset)
         offset += 1
         if len(data) == 1:
@@ -82,8 +79,8 @@ def loop(data: [], most_common_switch: bool) -> str:
 
 def answer_two(data: []):
     print("answer Two -------------------")
-    oxygen_generator_rating = loop(data.copy(), True)
-    co2_scrubber_rating = loop(data.copy(), False)
+    oxygen_generator_rating = loop(data.copy(), get_most_common_bit)
+    co2_scrubber_rating = loop(data.copy(), get_least_common_bit)
 
     print("oxygen_generator_rating:", oxygen_generator_rating, int(oxygen_generator_rating, 2))
     print("CO2_scrubber_rating:", co2_scrubber_rating, int(co2_scrubber_rating, 2))
