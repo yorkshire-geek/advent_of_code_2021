@@ -43,7 +43,6 @@ class BingoCard:
                 if value not in balls_drawn:
                     result.append(value)
 
-        # print(result)
         print(sum(result)*balls_drawn[-1])
 
 
@@ -66,50 +65,46 @@ def setup():
 
 
 def print_all_cards():
+    # map(lambda card: card.print_card(), cards)
     for card in cards:
         card.print_card()
 
 
-def do_we_have_winner() -> (bool, BingoCard):
-    for card in cards:
-        if card.is_winner():
-            return True, card
-    return False, None
+def get_first_winner_in_list() -> BingoCard:
+    return list(filter(lambda card: card.is_winner(), cards))[0]
+
+
+def we_have_a_winner() -> bool:
+    return len(list(filter(lambda card: card.is_winner(), cards))) > 0
 
 
 def all_cards_are_winner() -> bool:
-    for card in cards:
-        if not card.is_winner():
-            return False
-    return True
+    return len(list(filter(lambda card: card.is_winner() is False, cards))) == 0
 
 
 if __name__ == "__main__":
-    # sequence = []
     file_name = 'input.txt'
     with open(file_name) as f:
         lines = f.read().splitlines()
     balls_drawn = []
     cards = []
     sequence = setup_sequence(lines[0])
-
     setup()
+    print_all_cards()
 
     # Part one
     print("Part one ------------------")
     for n in range(0, len(sequence)):
         balls_drawn.append(sequence[n])
-        winner, winning_card = do_we_have_winner()
-        if winner:
-            # winning_card.print_card()
+        if we_have_a_winner():
+            winning_card = get_first_winner_in_list()
             winning_card.print_score()
             break
 
     # Part two
     print("Part two ------------------")
     balls_drawn = sequence
-    finished = False
-    while not finished:
+    while True:
         last_value = balls_drawn.pop()
         if not all_cards_are_winner():
             filtered = filter(lambda card: card.is_winner() is False, cards)
