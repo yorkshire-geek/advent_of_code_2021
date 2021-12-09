@@ -3,8 +3,6 @@ from utils.datawrapper import DataWrapper
 from collections import defaultdict
 
 
-
-
 class Day5DataWrapper (DataWrapper):
 
     @staticmethod

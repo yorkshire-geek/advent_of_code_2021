@@ -59,13 +59,12 @@ def setup_card(line_number: int, data: []) -> []:
 
 
 def setup():
-    for n in range(1, len(lines)):
-        if (lines[n]) == "":
-            cards.append(BingoCard(setup_card(n, lines)))
+    for counter in range(1, len(lines)):
+        if (lines[counter]) == "":
+            cards.append(BingoCard(setup_card(counter, lines)))
 
 
 def print_all_cards():
-    # map(lambda card: card.print_card(), cards)
     for card in cards:
         card.print_card()
 
@@ -82,6 +81,11 @@ def all_cards_are_winner() -> bool:
     return len(list(filter(lambda card: card.is_winner() is False, cards))) == 0
 
 
+def jobber():
+    global sequence
+    sequence = ["hello", "world"]
+
+
 if __name__ == "__main__":
     file_name = 'input.txt'
     with open(file_name) as f:
@@ -90,7 +94,7 @@ if __name__ == "__main__":
     cards = []
     sequence = setup_sequence(lines[0])
     setup()
-    print_all_cards()
+    # print_all_cards()
 
     # Part one
     print("Part one ------------------")
